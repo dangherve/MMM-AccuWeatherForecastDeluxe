@@ -52,8 +52,8 @@ module.exports = NodeHelper.create({
 
                 var hourlyUrl = payload.endpointHourly +
                     "/" + payload.locationKey +
-                    "?apikey=" + ((payload.apikey2 == null || payload.apikey2 == "") ? payload.apikey : payload.apikey2)  +
-                    "&lang=" + payload.language + 
+                    "?apikey=" + ((payload.apikey3 == null || payload.apikey3 == "") ? payload.apikey : payload.apikey3)  +
+                    "&lang=" + payload.language +
                     "&details=true";
                     
                 (async () => {

@@ -57,6 +57,7 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
     defaults: {
         apikey: "",
         apikey2: "",
+        apikey3: "",
         locationKey: "",
         endpoint: "http://dataservice.accuweather.com/forecasts/v1/daily/5day",
         endpointNow: "http://dataservice.accuweather.com/currentconditions/v1",
