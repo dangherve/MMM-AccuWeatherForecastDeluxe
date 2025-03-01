@@ -464,12 +464,12 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
       Hourly and Daily forecast items are no longer similar. Two routines are needed.
      */
 
-     // Hourly Function
-	forecastItemFactoryH: function(fDataH, type) {
-		var fItemH = new Object();
+    // Hourly Function
+    forecastItemFactoryH: function(fDataH, type) {
+        var fItemH = new Object();
 
-		fItemH.time = moment(fDataH.EpochDateTime * 1000).format(this.config.label_timeFormat);
-		fItemH.temperature = this.getUnit('temp',fDataH.Temperature.Value); //just display projected temperature for that hour
+        fItemH.time = moment(fDataH.EpochDateTime * 1000).format(this.config.label_timeFormat);
+        fItemH.temperature = this.getUnit('temp',fDataH.Temperature.Value); //just display projected temperature for that hour
 
         // --------- Precipitation ---------
         var precipProbability = fDataH.PrecipitationProbability;
@@ -479,21 +479,21 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
         var snowValue = fDataH.Snow.Value;
         fItemH.precipitation = this.formatPrecipitation(precipProbability, rainValue, snowValue);
 
-		// --------- Wind ---------
+        // --------- Wind ---------
         fItemH.wind = (this.formatWind(fDataH.Wind.Speed.Value, fDataH.Wind.Direction.Degrees, fDataH.WindGust.Speed.Value));
 
-		// --------- Icon ---------
+        // --------- Icon ---------
         if (this.config.useAnimatedIcons && !this.config.animateMainIconOnly) {
             fItemH.animatedIconId = this.getAnimatedIconId();
             fItemH.animatedIconName = this.convertAccuWeatherIdToIcon(fDataH.WeatherIcon, fDataH.IconPhrase);
         }
         fItemH.iconPath = this.generateIconSrc(this.convertAccuWeatherIdToIcon(fDataH.WeatherIcon, fDataH.IconPhrase));
-		console.log(fDataH);
+        console.log(fDataH);
 
-		return fItemH;
-	},
+          return fItemH;
+     },
 
-	// Daily and Currently function
+    // Daily and Currently function
     forecastItemFactory: function(fData, type, index = null, min = null, max = null) {
 
         var fItem = new Object();
@@ -515,9 +515,9 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
             fItem.animatedIconName = this.convertAccuWeatherIdToIcon(fData.Day.Icon, fData.Day.IconPhrase);
         }
         fItem.iconPath = this.generateIconSrc(this.convertAccuWeatherIdToIcon(fData.Day.Icon, fData.Day.IconPhrase));
-		console.log(fData);
+        console.log(fData);
         // --------- Temperature ---------
-		//display High / Low temperatures
+        //display High / Low temperatures
             fItem.tempRange = this.formatHiLowTemperature(fData.Temperature.Maximum.Value, fData.Temperature.Minimum.Value);
 
             fItem.bars = {
@@ -541,7 +541,7 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
             fItem.colorEnd = '#' + this.interpolateColor(colorLo, colorHi, colorEndPos);
 
         // --------- Precipitation ---------
-//TODO: get max value from day/night
+        //TODO: get max value from day/night
         var precipProbability = Math.max(fData.Day.PrecipitationProbability,fData.Night.PrecipitationProbability);
         precipProbability = (precipProbability > 0) ? (precipProbability / 100) : precipProbability;
         var rainValue = fData.Day.Rain.Value + fData.Night.Rain.Value;
@@ -549,7 +549,7 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
         fItem.precipitation = this.formatPrecipitation(precipProbability, rainValue, snowValue);
 
         // --------- Wind ---------
-//TODO: get max value from day/night
+        //TODO: get max value from day/night
         fItem.wind = (this.formatWind(fData.Day.Wind.Speed.Value, fData.Day.Wind.Direction.Degrees, fData.Day.WindGust.Speed.Value));
 
         return fItem;
@@ -690,18 +690,18 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
 
      */
     iconsets: {
-        "1m":	{ path: "1m"	, format: "svg" },
-        "1c":	{ path: "1c"	, format: "svg" },
-        "2m":	{ path: "2m"	, format: "svg" },
-        "2c":	{ path: "2c"	, format: "svg" },
-        "3m":	{ path: "3m"	, format: "svg" },
-        "3c":	{ path: "3c"	, format: "svg" },
-        "4m":	{ path: "4m"	, format: "svg" },
-        "4c":	{ path: "4c"	, format: "svg" },
-        "5m":	{ path: "5m"	, format: "svg" },
-        "5c":	{ path: "5c"	, format: "svg" },
-        "6fa":	{ path: "6fa"	, format: "svg" },
-        "6oa":	{ path: "6oa"	, format: "svg" }
+        "1m":   { path: "1m"    , format: "svg" },
+        "1c":   { path: "1c"    , format: "svg" },
+        "2m":   { path: "2m"    , format: "svg" },
+        "2c":   { path: "2c"    , format: "svg" },
+        "3m":   { path: "3m"    , format: "svg" },
+        "3c":   { path: "3c"    , format: "svg" },
+        "4m":   { path: "4m"    , format: "svg" },
+        "4c":   { path: "4c"    , format: "svg" },
+        "5m":   { path: "5m"    , format: "svg" },
+        "5c":   { path: "5c"    , format: "svg" },
+        "6fa":  { path: "6fa"   , format: "svg" },
+        "6oa":  { path: "6oa"   , format: "svg" }
     },
 
     /*
@@ -717,7 +717,7 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
         //    // Drizzle
         //    return "rain";
         //} else if (id === 511) {
-       //     // Rain - freezing rain
+        //     // Rain - freezing rain
         //    return "sleet";
         } else if ([12,13,14,18].includes(id)) {
             // Rain
@@ -729,7 +729,7 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
             // Snow
             return "snow";
         //} else if (id === 781) {
-       //     // Atmosphere - tornado
+        //     // Atmosphere - tornado
         //    return "tornado";
         } else if (id === 11) {
             // Atmosphere
@@ -737,7 +737,7 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
         } else if ([1,2].includes(id)) {
             return "clear-day";
         } else if ([30].includes(id)) {
-			return "hot-day";
+            return "hot-day";
         } else if ([3,4,5,6].includes(id)) {
             return "partly-cloudy-day";
         } else if ([7,8].includes(id)) {
@@ -756,10 +756,10 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
 
     /*
       This generates a URL to the icon file
-     */
+    */
     generateIconSrc: function(icon, mainIcon) {
         if (mainIcon) {
-			console.log("icons/" + this.iconsets[this.config.mainIconset].path + "/" +
+            console.log("icons/" + this.iconsets[this.config.mainIconset].path + "/" +
                 icon + "." + this.iconsets[this.config.mainIconset].format);
             return this.file("icons/" + this.iconsets[this.config.mainIconset].path + "/" +
                 icon + "." + this.iconsets[this.config.mainIconset].format);
@@ -775,7 +775,7 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
       to be rebuilt with each data refresh.  This traverses the
       DOM to find all of the current animated icon canvas elements
       and removes them by id from the skycons object.
-     */
+    */
     clearIcons: function() {
         this.skycons.pause();
         var self = this;
