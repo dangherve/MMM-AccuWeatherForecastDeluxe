@@ -67,7 +67,7 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
         requestDelay: 0,
         listenerOnly: false,
         units: config.units,
-        language: "en-us",
+        language: config.language,
         colored: true,
         highColor: '#F8DD70',
         lowColor: '#6FC4F5',
@@ -109,15 +109,46 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
         label_temp_i: "°",
         label_temp_m: "°",
         label_maximum: "max ",
-        label_high: "H ",
-        label_low: "L ",
+
+        //Do not use swith as it seem that we got some problem with array
+        // and recursive building if you have an idea feel free to solve it
+        label_high: ((config.language == "fr") ?
+                        "M " :
+                        (config.language == "en") ?
+                            "H " :
+                            "H "),
+        label_low: ((config.language == "fr") ?
+                        "m " :
+                        (config.language == "en") ?
+                            "L " :
+                            "L "),
         label_hi_lo_separator: " / ",
-        label_feels_like: "Feels like ",
+        label_feels_like: ((config.language == "fr") ?
+                            "Ressenti " :
+                            (config.language == "en") ?
+                                "Feels like " :
+                                "Feels like "),
         label_timeFormat: "h a",
-        label_days: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-        label_today: "Today",
-        label_tomorrow: "Tomorrow",
-        label_ordinals: ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"],
+        label_days: ((config.language == "fr") ?
+                        ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"] :
+                        (config.language == "en") ?
+                            ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"] :
+                            ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]),
+        label_today: ((config.language == "fr") ?
+                        "Aujourd'hui" :
+                        (config.language == "en") ?
+                            "Today" :
+                            "Today"),
+        label_tomorrow: ((config.language == "fr") ?
+                            "Demain" :
+                            (config.language == "en") ?
+                                "Tomorrow" :
+                                "Tomorrow"),
+        label_ordinals: ((config.language == "fr") ?
+                            ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSO", "SO", "OSO", "O", "ONO", "NO", "NNO"] :
+                            (config.language == "en") ?
+                                ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"] :
+                                ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"]),
         label_rain_i: " in",
         label_rain_m: " mm",
         label_snow_i: " in",
@@ -143,6 +174,8 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
         dp_wind_m: 0,
         moduleTimestampIdPrefix: "ACCUWEATHER_ONE_CALL_TIMESTAMP_",
     },
+
+
 
     validUnits: ["imperial", "metric", ""],
     validHourlyLayouts: ["tiled", "table"],

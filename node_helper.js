@@ -40,20 +40,20 @@ module.exports = NodeHelper.create({
                 var forecastUrl = payload.endpoint +
                     "/" + payload.locationKey +
                     "?apikey=" + payload.apikey +
-                    "&lang=" + payload.language +
+                    "&language=" + payload.language +
                     "&metric=" +  ((payload.units == "imperial") ? "false" : "true")  +
                     "&details=true";
 
                 var currentUrl = payload.endpointNow +
                     "/" + payload.locationKey +
                     "?apikey=" + ((payload.apikey2 == null || payload.apikey2 == "") ? payload.apikey : payload.apikey2)  +
-                    "&lang=" + payload.language +
+                    "&language=" + payload.language +
                     "&details=true";
 
                 var hourlyUrl = payload.endpointHourly +
                     "/" + payload.locationKey +
                     "?apikey=" + ((payload.apikey3 == null || payload.apikey3 == "") ? payload.apikey : payload.apikey3)  +
-                    "&lang=" + payload.language +
+                    "&language=" + payload.language +
                     "&details=true";
                     
                 (async () => {
