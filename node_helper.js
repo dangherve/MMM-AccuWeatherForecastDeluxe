@@ -40,16 +40,16 @@ module.exports = NodeHelper.create({
                 var forecastUrl = payload.endpoint +
                     "/" + payload.locationKey +
                     "?apikey=" + payload.apikey +
-                    "&lang=" + payload.language + 
+                    "&lang=" + payload.language +
                     "&metric=" +  ((payload.units == "imperial") ? "false" : "true")  +
                     "&details=true";
 
                 var currentUrl = payload.endpointNow +
                     "/" + payload.locationKey +
                     "?apikey=" + ((payload.apikey2 == null || payload.apikey2 == "") ? payload.apikey : payload.apikey2)  +
-                    "&lang=" + payload.language + 
+                    "&lang=" + payload.language +
                     "&details=true";
-                    
+
                 var hourlyUrl = payload.endpointHourly +
                     "/" + payload.locationKey +
                     "?apikey=" + ((payload.apikey2 == null || payload.apikey2 == "") ? payload.apikey : payload.apikey2)  +
@@ -66,28 +66,28 @@ module.exports = NodeHelper.create({
                     f = json1;
                     f.instanceId = payload.instanceId;
                     console.log("BB After Daily");
-                    
+
                     console.log("[MMM-AccuWeatherForecastDeluxe] Getting data: " + currentUrl);
                     const resp2 = await fetch(currentUrl);
                     const json2 = await resp2.json();
                     //console.log("[MMM-AccuWeatherForecastDeluxe] url2 data: " + JSON.stringify(json2) );
-                    f.Current = json2[0];    
-                    console.log("BB After Current");  
-                    
+                    f.Current = json2[0];
+                    console.log("BB After Current");
+
                     console.log("[MMM-AccuWeatherForecastDeluxe] Getting data: " + hourlyUrl);
                     const resp3 = await fetch(hourlyUrl);
                     const json3 = await resp3.json();
                     //console.log("[MMM-AccuWeatherForecastDeluxe] url3data: " + JSON.stringify(json2) );
-                    f.Hourly = json3; 
+                    f.Hourly = json3;
                     console.log ("BB After Hourly");
-                    
+
                     self.sendSocketNotification("ACCUWEATHER_ONE_CALL_FORECAST_DATA", f);
                     console.log("[MMM-AccuWeatherForecastDeluxe] " + " after sendSocketNotification");
                   })().catch(function (error) {
                     // if there's an error, log it
                     console.error("[MMM-AccuWeatherForecastDeluxe] " + " ** ERROR ** " + error);
                 });
-             
+
                 console.log("[MMM-AccuWeatherForecastDeluxe] after API calls");
             }
         }

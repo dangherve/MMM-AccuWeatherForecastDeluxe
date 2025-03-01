@@ -77,7 +77,7 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
         hourlyForecastHeaderText: "",
         showForecastTableColumnHeaderIcons: true,
         showHourlyForecast: true,
-        hourlyForecastLayout: "tiled", 
+        hourlyForecastLayout: "tiled",
         hourlyForecastInterval: 3,
         maxHourliesToShow: 3,
         dailyForecastHeaderText: "",
@@ -270,7 +270,7 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
                 }, self.config.updateInterval * 60 * 1000); //convert to milliseconds
 
             }, this.config.requestDelay);
-            
+
         }
 
         // Add formatted units value for field selection in node_helper.js; 'imperial' --> 'Imperial', 'metric' --> 'Metric'
@@ -284,6 +284,7 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
         this.sendSocketNotification("ACCUWEATHER_ONE_CALL_FORECAST_GET", {
             apikey: this.config.apikey,
             apikey2: this.config.apikey2,
+            apikey3: this.config.apikey3,
             locationKey: this.config.locationKey,
             units: this.config.units,
             language: this.config.language,
@@ -442,14 +443,14 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
                 animatedIconName: this.convertAccuWeatherIdToIcon(this.weatherData.Current.WeatherIcon, this.weatherData.Current.WeatherText),
                 iconPath: this.generateIconSrc(this.convertAccuWeatherIdToIcon(this.weatherData.DailyForecasts[0].Day.Icon, this.weatherData.DailyForecasts[0].Day.IconPhrase), true),
                 tempRange: this.formatHiLowTemperature(this.weatherData.DailyForecasts[0].Temperature.Maximum.Value, this.weatherData.DailyForecasts[0].Temperature.Minimum.Value),
-                precipitation: this.formatPrecipitation(null, 
-                    ((this.weatherData.Current.PrecipitationType === 'Rain')? 
-                        this.weatherData.Current.PrecipitationSummary.Past12Hours[this.config.unitsFormatted].Value  : null), 
-                    ((this.weatherData.Current.PrecipitationType === 'Snow')? 
+                precipitation: this.formatPrecipitation(null,
+                    ((this.weatherData.Current.PrecipitationType === 'Rain')?
+                        this.weatherData.Current.PrecipitationSummary.Past12Hours[this.config.unitsFormatted].Value  : null),
+                    ((this.weatherData.Current.PrecipitationType === 'Snow')?
                         this.weatherData.Current.PrecipitationSummary.Past12Hours[this.config.unitsFormatted].Value  : null)),
                 wind: this.formatWind(
-                    this.weatherData.Current.Wind.Speed[this.config.unitsFormatted].Value, 
-                    this.weatherData.Current.Wind.Direction.Degrees, 
+                    this.weatherData.Current.Wind.Speed[this.config.unitsFormatted].Value,
+                    this.weatherData.Current.Wind.Direction.Degrees,
                     this.weatherData.Current.WindGust.Speed[this.config.unitsFormatted].Value
                 ),
             },
@@ -462,22 +463,22 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
     /*
       Hourly and Daily forecast items are no longer similar. Two routines are needed.
      */
-     
+
      // Hourly Function
 	forecastItemFactoryH: function(fDataH, type) {
 		var fItemH = new Object();
-		
+
 		fItemH.time = moment(fDataH.EpochDateTime * 1000).format(this.config.label_timeFormat);
 		fItemH.temperature = this.getUnit('temp',fDataH.Temperature.Value); //just display projected temperature for that hour
 
         // --------- Precipitation ---------
         var precipProbability = fDataH.PrecipitationProbability;
         precipProbability = (precipProbability > 0) ? (precipProbability / 100) : precipProbability;
-        
+
         var rainValue = fDataH.Rain.Value;
         var snowValue = fDataH.Snow.Value;
         fItemH.precipitation = this.formatPrecipitation(precipProbability, rainValue, snowValue);
-        
+
 		// --------- Wind ---------
         fItemH.wind = (this.formatWind(fDataH.Wind.Speed.Value, fDataH.Wind.Direction.Degrees, fDataH.WindGust.Speed.Value));
 
@@ -488,10 +489,10 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
         }
         fItemH.iconPath = this.generateIconSrc(this.convertAccuWeatherIdToIcon(fDataH.WeatherIcon, fDataH.IconPhrase));
 		console.log(fDataH);
-		
+
 		return fItemH;
 	},
-	
+
 	// Daily and Currently function
     forecastItemFactory: function(fData, type, index = null, min = null, max = null) {
 
@@ -518,7 +519,7 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
         // --------- Temperature ---------
 		//display High / Low temperatures
             fItem.tempRange = this.formatHiLowTemperature(fData.Temperature.Maximum.Value, fData.Temperature.Minimum.Value);
-            
+
             fItem.bars = {
                 min: min,
                 max: max,
@@ -526,7 +527,7 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
                 interval: 100 / (max - min),
             };
             fItem.bars.barWidth = Math.round(fItem.bars.interval * (fData.Temperature.Maximum.Value - fData.Temperature.Minimum.Value));
-            
+
             fItem.bars.leftSpacerWidth = Math.round(fItem.bars.interval * (fData.Temperature.Minimum.Value - min));
             var colorStartPos = fItem.bars.interval * (fData.Temperature.Minimum.Value - min) / 100;
 
@@ -535,7 +536,7 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
 
             var colorLo = this.config.lowColor.substring(1);
             var colorHi = this.config.highColor.substring(1);
-            
+
             fItem.colorStart = '#' + this.interpolateColor(colorLo, colorHi, colorStartPos);
             fItem.colorEnd = '#' + this.interpolateColor(colorLo, colorHi, colorEndPos);
 
@@ -612,7 +613,7 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
             windGust = this.config.label_gust_wrapper_prefix + this.config.label_maximum + this.getUnit('gust', gust) + this.config.label_gust_wrapper_suffix;
         }
         var windSpeedRaw = parseFloat(speed.toFixed(this.config['dp_wind' + (this.config.units === 'metric' ? '_m' : '_i')]));
-        
+
         return {
             windSpeedRaw: windSpeedRaw,
             windSpeed: windSpeed,
@@ -634,7 +635,7 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
             case 'rain':
                 if (!this.config.dp_precip_leading_zero && rounded.indexOf("0.") === 0) rounded = rounded.substring(1);
                 break;
-            case 'wind': 
+            case 'wind':
                 if (!this.config.dp_wind_leading_zero && rounded.indexOf("0.") === 0) rounded = rounded.substring(1);
                 break;
         }

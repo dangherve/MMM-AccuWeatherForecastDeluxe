@@ -1,7 +1,7 @@
 {% macro dailyForecastItems() %}
-  {# 
-    this is a macro so that if both hourly and daily forecasts are table layout, 
-    they can share column widths, or be separate containers/tables if mixed 
+  {#
+    this is a macro so that if both hourly and daily forecasts are table layout,
+    they can share column widths, or be separate containers/tables if mixed
     layouts or daily header is present
   #}
   {% for d in forecast.daily %}
@@ -16,9 +16,9 @@
         {% endif %}
         </span>
         <span class="temperature-container small">
-          <span class="high-temperature"{% 
-            if config.colored 
-          %} 
+          <span class="high-temperature"{%
+            if config.colored
+          %}
             {% if config.relativeColors %}
               style="color: {{ d.colorEnd }};"
             {% else %}
@@ -29,9 +29,9 @@
             <span class="temperature-separator dimmed">{{ config.label_hi_lo_separator }}</span>
           {% endif%}
           {% if config.showDailyLow %}
-          <span class="low-temperature"{% 
-            if config.colored 
-          %} 
+          <span class="low-temperature"{%
+            if config.colored
+          %}
             {% if config.relativeColors %}
               style="color: {{ d.colorStart }};"
             {% else %}
@@ -41,7 +41,7 @@
           {% endif%}
         </span>
 
-        {% 
+        {%
           if config.showPrecipitationProbability
             or config.showPrecipitationAmount
         %}
@@ -71,10 +71,10 @@
           </span>
         {% endif %}
 
-        {% 
-          if config.showWindSpeed 
-            or config.showWindDirection 
-            or config.showWindGust 
+        {%
+          if config.showWindSpeed
+            or config.showWindDirection
+            or config.showWindGust
         %}
           <span class="wind-container">
             {% if d.wind.windSpeedRaw > 0 %}
@@ -83,11 +83,11 @@
               {% endif %}
               {% if config.showWindSpeed %}
                 <span class="wind-speed">{{ d.wind.windSpeed }}</span>
-              {% endif %}  
+              {% endif %}
 
               {% if config.showWindDirection %}
                 <span class="wind-direction">{{ d.wind.windDirection }}</span>
-              {% endif %}  
+              {% endif %}
 
               {% if d.wind.windGust %}
                 <span class="wind-gusts">{{ d.wind.windGust }}</span>
@@ -113,7 +113,7 @@
 
   {% if config.showCurrentConditions or config.showExtraCurrentConditions or config.showSummary %}
     <div class="wrapper{% if config.colored %} colored{% endif %}{% if config.showInlineIcons %} inline-icons{% endif %}">
-        
+
       {# -------------- Current Conditions -------------- #}
       {% if config.showCurrentConditions %}
         <div class="current-conditions-wrapper icon-set-{{ config.iconset }}">
@@ -135,15 +135,15 @@
       {% if config.showExtraCurrentConditions %}
         <div class="extra-current-conditions-wrapper small bright">
           <span class="temperature-container">
-            <span class="high-temperature"{% 
-              if config.colored 
-            %} 
+            <span class="high-temperature"{%
+              if config.colored
+            %}
               style="color: {{ config.highColor }};"
             {% endif %}>{{ forecast.currently.tempRange.high }}</span>
             <span class="temperature-separator dimmed">/</span>
-            <span class="low-temperature"{% 
-              if config.colored 
-            %} 
+            <span class="low-temperature"{%
+              if config.colored
+            %}
               style="color: {{ config.lowColor }};"
             {% endif %}>{{ forecast.currently.tempRange.low }}</span>
           </span>
@@ -162,7 +162,7 @@
             </span>
           {% endif %}
 
-          {% 
+          {%
             if config.showWindSpeed
               or config.showWindDirection
               or config.showWindGust
@@ -196,7 +196,7 @@
           <div class="summary">{{ forecast.summary }}</div>
         </div>
       {% endif %}
-      
+
     </div>
   {% endif %}
 
@@ -210,14 +210,14 @@
       {% endif %}
 
       {# -------------- Table & Tiled Hourly Forecast -------------- #}
-      {% 
-        if config.showHourlyForecast 
+      {%
+        if config.showHourlyForecast
           and (config.hourlyForecastLayout == "table" or config.hourlyForecastLayout == "tiled")
       %}
         <div class="forecast-container icon-set-{{ config.iconset }}">
 
-          {% 
-            if config.showForecastTableColumnHeaderIcons 
+          {%
+            if config.showForecastTableColumnHeaderIcons
             and config.hourlyForecastLayout == "table"
           %}
             <div class="header-row">
@@ -225,7 +225,7 @@
               <span class="weather-icon-header">&nbsp;</span>
               <span class="temperature-header">&nbsp;</span>
 
-              {% 
+              {%
                 if config.showPrecipitationProbability
                   or config.showPrecipitationAmount
               %}
@@ -234,7 +234,7 @@
                 </span>
               {% endif %}
 
-              {% 
+              {%
                 if config.showWindSpeed
                   or config.showWindDirection
                   or config.showWindGust
@@ -261,7 +261,7 @@
                 </span>
                 <span class="temperature small">{{ h.temperature }}</span>
 
-                {% 
+                {%
                   if config.showPrecipitationProbability
                     or config.showPrecipitationAmount
                 %}
@@ -291,7 +291,7 @@
                   </span>
                 {% endif %}
 
-                {% 
+                {%
                   if config.showWindSpeed
                     or config.showWindDirection
                     or config.showWindGust
@@ -324,8 +324,8 @@
           {% endfor %}
 
           {# Daily — join with this table if both hourly and daily are table layout #}
-          {% 
-            if config.showDailyForecast 
+          {%
+            if config.showDailyForecast
               and config.hourlyForecastLayout == "table"
               and config.dailyForecastLayout == "table"
               and config.dailyForecastHeaderText == ""
@@ -351,22 +351,22 @@
       {% endif %}
 
       {# -------------- Table & Tiled Forecasts -------------- #}
-      {% 
+      {%
         if not (
-          config.showDailyForecast 
+          config.showDailyForecast
           and config.hourlyForecastLayout == "table"
           and config.dailyForecastLayout == "table"
           and config.dailyForecastHeaderText == ""
-        ) 
+        )
         and (
-          config.dailyForecastLayout == "table" 
+          config.dailyForecastLayout == "table"
           or config.dailyForecastLayout == "tiled"
         )
       %}
         <div class="forecast-container icon-set-{{ config.iconset }}">
 
-          {% 
-            if config.showForecastTableColumnHeaderIcons 
+          {%
+            if config.showForecastTableColumnHeaderIcons
             and config.dailyForecastLayout == "table"
           %}
             <div class="header-row">
@@ -374,7 +374,7 @@
               <span class="weather-icon-header">&nbsp;</span>
               <span class="temperature-header">&nbsp;</span>
 
-              {% 
+              {%
                 if config.showPrecipitationProbability
                   or config.showPrecipitationAmount
               %}
@@ -383,7 +383,7 @@
                 </span>
               {% endif %}
 
-              {% 
+              {%
                 if config.showWindSpeed
                   or config.showWindDirection
                   or config.showWindGust
@@ -410,7 +410,7 @@
               <tr class="header-row">
                 <th class="date-time-header">&nbsp;</th>
                 <th class="weather-icon-header">&nbsp;</th>
-                {% 
+                {%
                   if config.showPrecipitationProbability
                     or config.showPrecipitationAmount
                 %}
@@ -419,7 +419,7 @@
                   </th>
                 {% endif %}
 
-                {% 
+                {%
                   if config.showWindSpeed
                     or config.showWindDirection
                     or config.showWindGust
@@ -445,7 +445,7 @@
                 {% endif %}
               </td>
               {# <td class="forecast-precip-prob">%|!</td> #}
-              {% 
+              {%
                 if config.showPrecipitationProbability
                   or config.showPrecipitationAmount
               %}
@@ -471,11 +471,11 @@
                 <td class="wind-container">
                   {% if config.showWindSpeed %}
                     <span class="wind-speed">{{ d.wind.windSpeed }}</span>
-                  {% endif %}  
+                  {% endif %}
 
                   {% if config.showWindDirection %}
                     <span class="wind-direction">{{ d.wind.windDirection }}</span>
-                  {% endif %}  
+                  {% endif %}
 
                   {% if d.wind.windGust %}
                     <span class="wind-gusts">{{ d.wind.windGust }}</span>
@@ -486,9 +486,9 @@
               <td>
                 <div class="forecast-bar">
                   <span style="width: {{ d.bars.leftSpacerWidth }}%;"></span>
-                  <span class="temp min-temp"{% 
-                    if config.colored 
-                  %} 
+                  <span class="temp min-temp"{%
+                    if config.colored
+                  %}
                     {% if config.relativeColors %}
                       style="color: {{ d.colorStart }};"
                     {% else %}
@@ -496,9 +496,9 @@
                     {% endif %}
                   {% endif %}>{{ d.tempRange.low }}</span>
                   <span class="bar" style="width: {{ d.bars.barWidth }}%;{% if config.colored %}background: padding-box linear-gradient(90deg, {{ d.colorStart }} 0%, {{ d.colorEnd }} 100%);{% endif %}">&nbsp;</span>
-                  <span class="temp max-temp"{% 
-                    if config.colored 
-                  %} 
+                  <span class="temp max-temp"{%
+                    if config.colored
+                  %}
                     {% if config.relativeColors %}
                       style="color: {{ d.colorEnd }};"
                     {% else %}
@@ -513,7 +513,7 @@
           </tbody>
         </table>
       {% endif %}
-      
+
     </div>
   {% endif %}
 
