@@ -4,7 +4,7 @@
     "description": "MagicMirror² module that gets weather forecast data from AccuWeather",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/maxbethge/MMM-AccuWeatherForecastDeluxe"
+        "url": "git+https://github.com/dangherve/MMM-AccuWeatherForecastDeluxe"
     },
     "keywords": [
         "magicmirror",
