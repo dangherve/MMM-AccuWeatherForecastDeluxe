@@ -59,6 +59,10 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
         apikey2: "",
         apikey3: "",
         locationKey: "",
+        debug: false,
+        endpointDebug: "",
+        endpointNowDebug: "",
+        endpointHourlyDebug: "",
         endpoint: "https://dataservice.accuweather.com/forecasts/v1/daily/5day",
         endpointNow: "https://dataservice.accuweather.com/currentconditions/v1",
         endpointHourly: "https://dataservice.accuweather.com/forecasts/v1/hourly/12hour",
@@ -324,9 +328,13 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
             language: this.config.language,
             instanceId: this.identifier,
             requestDelay: this.config.requestDelay,
+            debug: this.config.debug,
             endpoint: this.config.endpoint,
             endpointNow: this.config.endpointNow,
-            endpointHourly: this.config.endpointHourly
+            endpointHourly: this.config.endpointHourly,
+            endpointDebug: this.config.endpointDebug,
+            endpointNowDebug: this.config.endpointNowDebug,
+            endpointHourlyDebug: this.config.endpointHourlyDebug
         });
 
     },

@@ -55,7 +55,16 @@ module.exports = NodeHelper.create({
                     "?apikey=" + ((payload.apikey3 == null || payload.apikey3 == "") ? payload.apikey : payload.apikey3)  +
                     "&language=" + payload.language +
                     "&details=true";
-                    
+
+                console.log("[MMM-AccuWeatherForecastDeluxe] URL : forecastUrl " + forecastUrl);
+                console.log("[MMM-AccuWeatherForecastDeluxe] URL : currentUrl " + currentUrl);
+                console.log("[MMM-AccuWeatherForecastDeluxe] URL : hourlyUrl " + hourlyUrl);
+                if ( payload.debug ){
+                    forecastUrl = payload.endpointDebug
+                    currentUrl = payload.endpointNowDebug
+                    hourlyUrl = payload.endpointHourlyDebug
+                }
+
                 (async () => {
                     var f = {};
                     var fh = {};
