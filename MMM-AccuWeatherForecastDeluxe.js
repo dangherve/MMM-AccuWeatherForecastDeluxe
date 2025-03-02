@@ -59,9 +59,9 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
         apikey2: "",
         apikey3: "",
         locationKey: "",
-        endpoint: "http://dataservice.accuweather.com/forecasts/v1/daily/5day",
-        endpointNow: "http://dataservice.accuweather.com/currentconditions/v1",
-        endpointHourly: "http://dataservice.accuweather.com/forecasts/v1/hourly/12hour",
+        endpoint: "https://dataservice.accuweather.com/forecasts/v1/daily/5day",
+        endpointNow: "https://dataservice.accuweather.com/currentconditions/v1",
+        endpointHourly: "https://dataservice.accuweather.com/forecasts/v1/hourly/12hour",
         updateInterval: 120, // minutes
         updateFadeSpeed: 500, // milliseconds
         requestDelay: 0,
