@@ -1,0 +1,9 @@
+when:
+  - event: cron
+    branch: main
+
+steps:
+  - name: sync repo
+    image: dangherve/owngit
+    commands:
+        - ./buildTools/rebase.sh
